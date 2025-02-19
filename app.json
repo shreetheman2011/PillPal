@@ -39,7 +39,9 @@
           "resizeMode": "cover",
           "backgroundColor": "#00000"
         }
-      ]
+      ],
+      "./expo-plugins/withAndroidManifest",
+      "./expo-plugins/withGradleProperties"
     ],
     "experiments": {
       "typedRoutes": true
