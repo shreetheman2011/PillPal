@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "PillPal",
+    "slug": "pillpal",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "extra": {
+      "eas": {
+        "projectId": "6976891e-17df-4925-ba04-f9e5e410c35a"
+      }
+    },
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/splash-screen-image.png",
+        "backgroundColor": "#00000",
+        "resizeMode": "cover"
+      },
+      "package": "com.itztheman0.pillpal"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png",
+      "resizeMode": "cover"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-screen-image.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#00000"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
