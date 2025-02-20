@@ -70,65 +70,7 @@ interface CircularPorgressProps {
   totalDoses: number;
   completedDoses: number;
 }
-function CircularProgress({
-  progress,
-  totalDoses,
-  completedDoses,
-}: CircularPorgressProps) {
-  const animationValue = useRef(new Animated.Value(0)).current;
-  const size = width * 0.55;
-  const strokeWidth = 15;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  useEffect(() => {
-    Animated.timing(animationValue, {
-      toValue: progress,
-      duration: 1000,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    }).start();
-  }, [progress]);
 
-  const strokeDashoffset = animationValue.interpolate({
-    inputRange: [0, 1], // Since progress is in percentages (0 to 100)
-    outputRange: [circumference, 0], // Full circle at 100%, empty at 0%
-  });
-
-  return (
-    <View style={styles.progressContainer}>
-      <View style={styles.progressTextContainer}>
-        <Text style={styles.progressPercentage}>
-          {Math.round(progress * 100)}%
-        </Text>
-        <Text style={styles.progressDetails}>
-          {completedDoses} of {totalDoses} doses
-        </Text>
-      </View>
-      <Svg width={size} height={size} style={styles.progressRing}>
-        <Circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="rgba(255, 255, 255, 0.2)"
-          strokeWidth={strokeWidth}
-          fill="none"
-        />
-        <AnimatedCircle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="white"
-          strokeWidth={strokeWidth}
-          fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        />
-      </Svg>
-    </View>
-  );
-}
 export default function HomeScreen() {
   const { frequency } = useFrequency();
   const [todaysMedications, setTodaysMedications] = useState<Medication[]>([]);
@@ -199,7 +141,7 @@ export default function HomeScreen() {
     setupNotifications();
 
     const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (nextAppState == "active") {
+      if (nextAppState === "active") {
         loadMedications();
       }
     });
@@ -411,6 +353,66 @@ export default function HomeScreen() {
         </View>
       </Modal>
     </ScrollView>
+  );
+}
+
+function CircularProgress({
+  progress,
+  totalDoses,
+  completedDoses,
+}: CircularPorgressProps) {
+  const animationValue = useRef(new Animated.Value(0)).current;
+  const size = width * 0.55;
+  const strokeWidth = 15;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  useEffect(() => {
+    Animated.timing(animationValue, {
+      toValue: progress,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, [progress]);
+
+  const strokeDashoffset = animationValue.interpolate({
+    inputRange: [0, 1], // Since progress is in percentages (0 to 100)
+    outputRange: [circumference, 0], // Full circle at 100%, empty at 0%
+  });
+
+  return (
+    <View style={styles.progressContainer}>
+      <View style={styles.progressTextContainer}>
+        <Text style={styles.progressPercentage}>
+          {Math.round(progress * 100)}%
+        </Text>
+        <Text style={styles.progressDetails}>
+          {completedDoses} of {totalDoses} doses
+        </Text>
+      </View>
+      <Svg width={size} height={size} style={styles.progressRing}>
+        <Circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="rgba(255, 255, 255, 0.2)"
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+        <AnimatedCircle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="white"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+      </Svg>
+    </View>
   );
 }
 
