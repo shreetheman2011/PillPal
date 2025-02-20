@@ -19,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash-screen-image.png",
-        "backgroundColor": "#00000",
+        "backgroundColor": "#000000",
         "resizeMode": "cover"
       },
       "package": "com.itztheman0.pillpal"
@@ -37,11 +37,9 @@
         {
           "image": "./assets/images/splash-screen-image.png",
           "resizeMode": "cover",
-          "backgroundColor": "#00000"
+          "backgroundColor": "#000000"
         }
-      ],
-      "./expo-plugins/withAndroidManifest",
-      "./expo-plugins/withGradleProperties"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
