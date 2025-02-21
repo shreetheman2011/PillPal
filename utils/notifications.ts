@@ -68,20 +68,31 @@ export async function scheduleMedicationReminder(
         today.setDate(today.getDate() + 1);
       }
 
+      let trigger: Notifications.NotificationTriggerInput;
+
+      if (Platform.OS === "ios") {
+        // Use date-based trigger for iOS
+        trigger = {
+          date: today,
+          repeats: true,
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+        };
+      } else {
+        // Use hour/minute trigger for Android
+        trigger = {
+          hour: hours,
+          minute: minutes,
+          repeats: true,
+        };
+      }
+
       const identifier = await Notifications.scheduleNotificationAsync({
         content: {
           title: "Medication Reminder",
           body: `Time to take ${medication.name} (${medication.dosage})`,
           data: { medicationId: medication.id },
         },
-        trigger: {
-          hour: hours,
-          minute: minutes,
-          repeats: true,
-          type:
-            Platform.OS === "ios" &&
-            Notifications.SchedulableTriggerInputTypes.CALENDAR,
-        },
+        trigger: trigger,
       });
 
       return identifier;
